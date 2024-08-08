@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Threat Map and Attack Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        #mapContainer {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            border-bottom: 2px solid #ddd;
+        }
+        /* #attackData {
+            height: 50vh;
+            width: 100vw;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+        #attackData h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        #attackList {
+            list-style-type: none;
+            padding: 0;
+        }
+        #attackList li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            color: #555;
+        }
+        #attackList li:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        #attackList li:nth-child(even) {
+            background-color: #fff;
+        } */
+    </style>
+</head>
+<body>
+    <div id="mapContainer">
+        <iframe src="https://threatmap.bitdefender.com/" frameborder="0" style="border:0; width:100%; height:100%;" allowfullscreen></iframe>
+    </div>
+    <!-- <div id="attackData">
+        <h2>Real-time Attack Data</h2>
+        <ul id="attackList"></ul>
+    </div> -->
+
+    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js"></script>
+    <script>
+        var socket = io();
+
+        socket.on('new_attack', function(data) {
+            var attackList = document.getElementById('attackList');
+            var listItem = document.createElement('li');
+            listItem.textContent = `Type: ${data.type}, Time: ${new Date(data.timestamp * 1000).toLocaleString()}, Location: ${data.location.place}`;
+            attackList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>

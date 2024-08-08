@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Threat Map with Custom Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            background-color: #333;
+            color: #fff;
+        }
+        #map-container {
+            position: relative;
+            height: 600px;
+            width: 100%;
+            border: 2px solid #ddd;
+            background-color: #fff;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+            border: none;
+        }
+        #data-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .alert-box {
+            position: absolute;
+            background-color: rgba(255, 0, 0, 0.6);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            pointer-events: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Threat Map with Custom Alerts</h1>
+    <div id="map-container">
+        <!-- Embed Radware Threat Map -->
+        <iframe id="map" src="https://livethreatmap.radware.com/" frameborder="0"></iframe>
+        
+        <!-- Overlay for additional data -->
+        <div id="data-overlay"></div>
+    </div>
+
+    <script>
+        // Sample data - Replace this with your actual data
+        const alerts = [
+            {lat: 40.7128, lng: -74.0060, message: 'High Risk Attack Detected in New York'},
+            {lat: 34.0522, lng: -118.2437, message: 'Medium Risk Attack Detected in Los Angeles'},
+            // Add more alerts as needed
+        ];
+
+        // Create alert boxes
+        const dataOverlay = document.getElementById('data-overlay');
+        alerts.forEach(alert => {
+            const alertBox = document.createElement('div');
+            alertBox.className = 'alert-box';
+            alertBox.textContent = alert.message;
+
+            // Positioning the alert box - update as needed based on your map's coordinate system
+            alertBox.style.top = `${Math.random() * 80}%`; // Example positioning
+            alertBox.style.left = `${Math.random() * 80}%`; // Example positioning
+
+            dataOverlay.appendChild(alertBox);
+        });
+    </script>
+</body>
+</html>

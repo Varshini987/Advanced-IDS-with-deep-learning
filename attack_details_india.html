@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Details in India</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        body {
+            font-family: Poppins, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: #fff;
+            overflow: hidden;
+        }
+        #container {    
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+        }
+        #container h1 {
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+        .info-box {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        #api-data {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            opacity: 0;
+        }
+        .alert {
+            color: #ff4136;
+            font-weight: bold;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        #api-data {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            opacity: 50; /* Ensure visibility */
+        }
+        #attack-details {
+            color: #fff; /* Ensure text is visible */
+        }
+    </style>
+</head>
+<body>
+    <div  autoplay muted loop>
+         <img id="background-video" src="https://media1.giphy.com/media/ELham0Mveox9e/giphy.gif?cid=6c09b952xyc37bjy57t8fy7j7sdcg1gh2lcv5h58uxcdc2qe&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="">
+        
+    </div>
+
+    <div id="container">
+        <h1>Real-Time Attack Details in India</h1>
+        <div class="info-box">
+            <p>
+                <strong>Type:</strong> Cyber Attack<br>
+                <strong>Location:</strong> Mumbai, India<br>
+                <strong>Description:</strong> Ongoing cyber attack in Mumbai involving multiple sectors. <span class="alert">Immediate response required.</span>
+            </p>
+        </div>
+        <div id="api-data">
+            <h2>Live Attack Data</h2>
+            <div id="attack-details">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded");
+
+            // GSAP Animations
+            gsap.from("h1", {duration: 1, opacity: 0, y: -50, ease: "power3.out"});
+            gsap.from(".info-box", {duration: 1, opacity: 0, y: 20, ease: "power3.out", delay: 0.5});
+            gsap.from("#api-data", {duration: 1, opacity: 0, y: 20, ease: "power3.out", delay: 1});
+
+            function fetchAttackData() {
+                console.log("Fetching attack data");
+                const simulatedData = Array.from({ length: 4 }, () => ({
+                    id: Math.random().toString(36).substring(7), // Unique ID for each entry
+                    attacksLastHour: Math.floor(Math.random() * 100),
+                    targetedSectors: ['Finance', 'Healthcare', 'Government'],
+                    threatLevel: ['High', 'Medium', 'Low'][Math.floor(Math.random() * 3)]
+                }));
+
+                updateAttackDetails(simulatedData);
+            }
+
+            function updateAttackDetails(data) {
+                console.log("Updating attack details", data);
+                const detailsElement = document.getElementById('attack-details');
+                if (detailsElement) {
+                    detailsElement.innerHTML = data.map(entry => `
+                        <div>
+                            <p><strong>Attacks in the last hour:</strong> ${entry.attacksLastHour}</p>
+                            <p><strong>Targeted Sectors:</strong> ${entry.targetedSectors.join(', ')}</p>
+                            <p><strong>Threat Level:</strong> <span class="alert">${entry.threatLevel}</span></p>
+                            <hr/>
+                        </div>
+                    `).join('');
+
+                    // Animate the updated data
+                    gsap.from("#attack-details p", {duration: 0.5, opacity: 0, y: 10, stagger: 0.2, ease: "power2.out"});
+                } else {
+                    console.error("Could not find element with id 'attack-details'");
+                }
+            }
+
+            // Initial fetch and set interval for updates
+            fetchAttackData();
+            setInterval(fetchAttackData, 10000); // Update every 10 seconds
+        });
+    </script>
+</body>
+</html>
